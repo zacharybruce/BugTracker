@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -54,6 +55,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //project.ProfileID = User.Identity.GetUserName();
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
