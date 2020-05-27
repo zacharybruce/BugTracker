@@ -42,7 +42,7 @@ namespace WebApp.Controllers
         // GET: Projects/Create
         public ActionResult Create()
         {
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
             return View();
         }
 
@@ -55,13 +55,14 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //project.ProfileID = User.Identity.GetUserName();
+                var userID = User.Identity.GetUserName();
+                project.ProfileID = db.Profiles.Where(x => x.Email == userID).Select(x => x.ID).Single();
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
             return View(project);
         }
 
