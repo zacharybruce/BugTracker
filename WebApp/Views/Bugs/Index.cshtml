@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WebApp.Models.Bug>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bugs";
 }
 
-<h2>Index</h2>
+<h2>Bugs</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add Bug", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,13 +15,13 @@
             @Html.DisplayNameFor(model => model.Profile.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BugName)
+            Bug Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Priority)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BugDescription)
+            Description
         </th>
         <th></th>
     </tr>

@@ -2,7 +2,7 @@
 @model IEnumerable<WebApp.Models.Project>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Projects";
 }
 
 <h2>Projects</h2>
@@ -27,7 +27,8 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
+                    @*@Html.DisplayFor(modelItem => item.ProjectName)*@
+                    @Html.ActionLink(item.ProjectName, "Index", "Bugs")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProjectDescription)
