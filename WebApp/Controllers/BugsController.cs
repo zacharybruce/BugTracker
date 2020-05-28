@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -41,7 +42,7 @@ namespace WebApp.Controllers
         // GET: Bugs/Create
         public ActionResult Create()
         {
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
             return View();
         }
 
@@ -54,12 +55,14 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userID = User.Identity.GetUserName();
+                bug.ProfileID = db.Profiles.Where(x => x.Email == userID).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", bug.ProfileID);
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", bug.ProfileID);
             return View(bug);
         }
 
