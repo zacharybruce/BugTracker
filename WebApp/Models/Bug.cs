@@ -11,8 +11,8 @@ namespace WebApp.Models
         public string BugName { get; set; }
         public string Priority { get; set; }
         public string BugDescription { get; set; }
-        public int ProfileID { get; set; }
+        public int ProjectID { get; set; }
 
-        public virtual Profile Profile { get; set; }
+        public virtual Project Project { get; set; }
     }
 }
