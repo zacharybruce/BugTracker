@@ -114,6 +114,12 @@ namespace WebApp.Controllers
             return View(project);
         }
 
+        public ActionResult Bugs()
+        {
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.ToList());
+        }
+
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -355,6 +355,7 @@
     <Content Include="Views\Bugs\Details.cshtml" />
     <Content Include="Views\Bugs\Edit.cshtml" />
     <Content Include="Views\Bugs\Index.cshtml" />
+    <Content Include="Views\Projects\Bugs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
