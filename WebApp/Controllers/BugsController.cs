@@ -40,9 +40,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Bugs/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
+            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
             return View();
         }
 
@@ -51,15 +51,15 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug)
+        public ActionResult Create([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
         {
             if (ModelState.IsValid)
             {
                 //var userID = User.Identity.GetUserName();
-                //bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
+                bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Bugs", "Projects", new { id = id });
             }
 
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
@@ -87,13 +87,13 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug)
+        public ActionResult Edit([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(bug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Bugs", "Projects", new { id = id });
             }
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);

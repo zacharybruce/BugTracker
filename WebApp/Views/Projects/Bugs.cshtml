@@ -7,7 +7,7 @@
 <h2>Bugs</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "Bugs")
+    @Html.ActionLink("Create New", "Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
 </p>
 <table class="table">
     <tr>

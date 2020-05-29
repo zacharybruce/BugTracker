@@ -114,12 +114,6 @@ namespace WebApp.Controllers
             return View(project);
         }
 
-        public ActionResult Bugs(int id)
-        {
-            var bugs = db.Bugs.Include(b => b.Project);
-            return View(bugs.Where(b => b.ProjectID == id).ToList());
-        }
-
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -130,6 +124,35 @@ namespace WebApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult Bugs(int id)
+        {
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.Where(b => b.ProjectID == id).ToList());
+        }
+
+        //public ActionResult NewBug(int id)
+        //{
+        //    //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult NewBug([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //var userID = User.Identity.GetUserName();
+        //        bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
+        //        db.Bugs.Add(bug);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Bugs", "Projects", new { id = id});
+        //    }
+
+        //    ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+        //    return View(bug);
+        //}
 
         protected override void Dispose(bool disposing)
         {
