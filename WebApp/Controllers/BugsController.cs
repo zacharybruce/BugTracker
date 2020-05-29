@@ -56,10 +56,10 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 //var userID = User.Identity.GetUserName();
-                //bug.ProjectID = db.Profiles.Where(x => x.Email == userID).Select(x => x.ID).Single();
+                //bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Projects");
             }
 
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
@@ -78,7 +78,7 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", bug.ProjectID);
+            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
@@ -93,9 +93,9 @@ namespace WebApp.Controllers
             {
                 db.Entry(bug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Projects");
             }
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", bug.ProjectID);
+            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
@@ -122,7 +122,7 @@ namespace WebApp.Controllers
             Bug bug = db.Bugs.Find(id);
             db.Bugs.Remove(bug);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Projects");
         }
 
         protected override void Dispose(bool disposing)
