@@ -114,10 +114,10 @@ namespace WebApp.Controllers
             return View(project);
         }
 
-        public ActionResult Bugs()
+        public ActionResult Bugs(int id)
         {
             var bugs = db.Bugs.Include(b => b.Project);
-            return View(bugs.ToList());
+            return View(bugs.Where(b => b.ProjectID == id).ToList());
         }
 
         // POST: Projects/Delete/5
