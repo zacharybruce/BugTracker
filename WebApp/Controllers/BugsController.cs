@@ -93,12 +93,11 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var currentBug = db.Bugs.FirstOrDefault(b => b.ID == bug.ID);
-                currentBug.BugName = bug.BugName; //db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
+                currentBug.BugName = bug.BugName;
                 currentBug.BugDescription = bug.BugDescription;
                 currentBug.Priority = bug.Priority;
-                //db.Entry(bug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Bugs", "Projects", new { id = id });
+                return RedirectToAction("Bugs", "Projects", new { id = currentBug.ProjectID });
             }
             //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
