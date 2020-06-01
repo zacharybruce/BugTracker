@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -78,7 +79,7 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
             return View(project);
         }
 
@@ -87,15 +88,17 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ProjectName,ProjectDescription,ProfileID")] Project project)
+        public ActionResult Edit(Project project)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
+                var currentProject = db.Projects.FirstOrDefault(p => p.ID == project.ID);
+                currentProject.ProjectName = project.ProjectName;
+                currentProject.ProjectDescription = project.ProjectDescription;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
+            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email", project.ProfileID);
             return View(project);
         }
 
@@ -130,29 +133,6 @@ namespace WebApp.Controllers
             var bugs = db.Bugs.Include(b => b.Project);
             return View(bugs.Where(b => b.ProjectID == id).ToList());
         }
-
-        //public ActionResult NewBug(int id)
-        //{
-        //    //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult NewBug([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        //var userID = User.Identity.GetUserName();
-        //        bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
-        //        db.Bugs.Add(bug);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Bugs", "Projects", new { id = id});
-        //    }
-
-        //    ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
-        //    return View(bug);
-        //}
 
         protected override void Dispose(bool disposing)
         {
