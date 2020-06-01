@@ -88,7 +88,7 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Bug bug)
+        public ActionResult Edit(Bug bug, int id)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace WebApp.Controllers
                 currentBug.Priority = bug.Priority;
                 //db.Entry(bug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("Bugs", "Projects", new { id = id });
             }
             //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
