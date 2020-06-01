@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -78,7 +79,7 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
@@ -87,15 +88,19 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
+        public ActionResult Edit(Bug bug)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bug).State = EntityState.Modified;
+                var currentBug = db.Bugs.FirstOrDefault(b => b.ID == bug.ID);
+                currentBug.BugName = bug.BugName; //db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
+                currentBug.BugDescription = bug.BugDescription;
+                currentBug.Priority = bug.Priority;
+                //db.Entry(bug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Bugs", "Projects", new { id = id });
+                return RedirectToAction("Index", "Projects");
             }
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
