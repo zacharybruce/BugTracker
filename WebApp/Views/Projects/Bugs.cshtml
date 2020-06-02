@@ -11,36 +11,36 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Project.ProjectName)
+        <th class="listHeader">
+            Project Name
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BugName)
+        <th class="listHeader">
+            Bug Name
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Priority)
+        <th class="listHeader">
+            Priority
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BugDescription)
+        <th class="listHeader" style="border-right:solid">
+            Description
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="listBody" style="padding:47px 0px">
             @Html.DisplayFor(modelItem => item.Project.ProjectName)
         </td>
-        <td>
+        <td class="listBody" style="padding:47px 0px">
             @Html.DisplayFor(modelItem => item.BugName)
         </td>
-        <td>
+        <td class="listBody" style="padding:47px 0px">
             @Html.DisplayFor(modelItem => item.Priority)
         </td>
-        <td>
+        <td class="listBody" style="padding:47px 0px">
             @Html.DisplayFor(modelItem => item.BugDescription)
         </td>
-        <td>
+        <td class="listBody" style="padding:47px 0px">
             @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null) |
             @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, null) |
             @Html.ActionLink("Delete", "Delete", "Bugs", new { id=item.ID }, null)

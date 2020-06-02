@@ -27,3 +27,15 @@ textarea {
     background-color: lightblue !important;
     width: 100% !important;
 }
+
+.listHeader {
+    text-align: center;
+    border-left : solid;
+    border-top : solid;
+}
+
+.listBody {
+    text-align: center;
+    border-left: solid;
+    height: 100px;
+}
