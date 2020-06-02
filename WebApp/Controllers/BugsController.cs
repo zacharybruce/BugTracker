@@ -63,7 +63,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Bugs", "Projects", new { id = id });
             }
 
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
@@ -79,7 +79,7 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+            //ViewBag.Priority = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
