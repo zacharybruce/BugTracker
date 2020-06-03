@@ -10,7 +10,7 @@ namespace WebApp.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Project name is required"), Display(Name = "Project Name")]
         public string ProjectName { get; set; }
 
         [Display(Name = "Description")]
