@@ -4,9 +4,9 @@
     ViewBag.Title = "Bugs";
 }
 
-<h2>Bugs</h2>
+<h1 class="text-center pageTitle">@Url.RequestContext.RouteData.Values["id"]</h1>
 
-<p>
+<p class="text-center">
     @Html.ActionLink("Add Bug", "Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
 </p>
 <table class="table">
@@ -23,29 +23,42 @@
         <th class="listHeader" style="border-right:solid">
             @Html.DisplayNameFor(model => model.BugDescription)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td class="listBody" style="padding:47px 0px">
-            @Html.DisplayFor(modelItem => item.Project.ProjectName)
-        </td>
-        <td class="listBody" style="padding:47px 0px">
-            @Html.DisplayFor(modelItem => item.BugName)
-        </td>
-        <td class="listBody" style="padding:47px 0px">
-            @Html.DisplayFor(modelItem => item.Priority)
-        </td>
-        <td class="listBody" style="padding:47px 0px">
-            @Html.DisplayFor(modelItem => item.BugDescription)
-        </td>
-        <td class="listBody" style="padding:47px 0px">
-            @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null) |
-            @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, null) |
-            @Html.ActionLink("Delete", "Delete", "Bugs", new { id=item.ID }, null)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="listBody" style="padding:47px 0px">
+                @Html.DisplayFor(modelItem => item.Project.ProjectName)
+            </td>
+            <td class="listBody" style="padding:47px 0px">
+                @Html.DisplayFor(modelItem => item.BugName)
+            </td>
+            <td class="listBody" style="padding:47px 0px">
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td class="listBody" style="padding:47px 0px">
+                @Html.DisplayFor(modelItem => item.BugDescription)
+            </td>
+            <td class="listBody" style="padding:47px 0px">
+                @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null) |
+                @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Bugs", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
 
 </table>
+
+@*@foreach (var item in Model)
+{
+    <div class="thumbnail bug">
+        <p class="pull-right delete">@Html.ActionLink("x", "Delete", "Bugs", new { id = item.ID }, null)</p>
+        <p>@Html.ActionLink(item.BugName, "Details", "Bugs", new { id = item.ID }, null)</p>
+        <p>@Html.DisplayFor(modelItem => item.Priority)</p>
+        <p>@Html.DisplayFor(modelItem => item.BugDescription)</p>
+        <p class="text-center">
+            @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null)
+         </p>
+    </div>
+}*@

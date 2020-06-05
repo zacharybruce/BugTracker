@@ -41,7 +41,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Bugs/Create
-        public ActionResult Create(int id)
+        public ActionResult Create(string id)
         {
             //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
             return View();
@@ -52,12 +52,12 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,BugName,Priority,BugDescription,ProjectID")] Bug bug, int id)
+        public ActionResult Create([Bind(Include = "BugName,Priority,BugDescription,ProjectID")] Bug bug, string id)
         {
             if (ModelState.IsValid)
             {
                 //var userID = User.Identity.GetUserName();
-                bug.ProjectID = db.Projects.Where(x => x.ID == id).Select(x => x.ID).Single();
+                bug.ProjectID = db.Projects.Where(x => x.ProjectName == id).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
                 return RedirectToAction("Bugs", "Projects", new { id = id });

@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    font-size: 18px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -47,4 +48,37 @@ textarea {
 textarea {
     height: 200px;
     width: 400px;
+}
+
+.addDeletePic {
+    width: 100px;
+    text-align: center;
+}
+
+.listPic {
+    width: 150px;
+    margin-top: 80px;
+}
+
+.project {
+    background-color: lightcyan;
+    border: 1px solid;
+    box-shadow: 5px 10px 8px grey;
+    margin-bottom: 50px;
+    width: 75%;
+}
+
+.pageTitle {
+    font-size: 60px;
+}
+
+.delete {
+    margin-right: 5px
+}
+
+.bug {
+    background-color: lightgreen;
+    border: 1px solid;
+    box-shadow: 5px 10px 8px grey;
+    margin-bottom: 50px;
 }

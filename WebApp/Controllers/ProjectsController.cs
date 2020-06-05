@@ -128,10 +128,10 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Bugs(int id)
+        public ActionResult Bugs(string id)
         {
             var bugs = db.Bugs.Include(b => b.Project);
-            return View(bugs.Where(b => b.ProjectID == id).ToList());
+            return View(bugs.Where(b => b.Project.ProjectName == id).ToList());
         }
 
         protected override void Dispose(bool disposing)
