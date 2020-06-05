@@ -124,9 +124,10 @@ namespace WebApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Bug bug = db.Bugs.Find(id);
+            var currentProject = bug.Project.ProjectName;
             db.Bugs.Remove(bug);
             db.SaveChanges();
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Bugs", "Projects", new { id = currentProject });
         }
 
         protected override void Dispose(bool disposing)
