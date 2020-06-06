@@ -29,15 +29,25 @@ textarea {
     width: 100% !important;
 }
 
+table {
+    border:solid;
+}
+
 .listHeader {
     text-align: center;
-    border-left : solid;
+    border: solid;
+}
+
+td {
+    height:100px;
+    vertical-align: bottom;
 }
 
 .listBody {
     text-align: center;
     border-left: solid;
-    height: 100px;
+    width: 100px;
+    vertical-align: bottom
 }
 
 .button {

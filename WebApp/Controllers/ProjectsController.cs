@@ -130,8 +130,10 @@ namespace WebApp.Controllers
 
         public ActionResult Bugs(string id)
         {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
             var bugs = db.Bugs.Include(b => b.Project);
-            return View(bugs.Where(b => b.Project.ProjectName == id).ToList());
+            return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList());
         }
 
         protected override void Dispose(bool disposing)
