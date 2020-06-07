@@ -57,7 +57,8 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 //var userID = User.Identity.GetUserName();
-                bug.ProjectID = db.Projects.Where(x => x.ProjectName == id).Select(x => x.ID).Single();
+                string currentUser = User.Identity.GetUserName();
+                bug.ProjectID = db.Projects.Where(x => x.ProjectName == id && x.Profile.Email == currentUser).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
                 return RedirectToAction("Bugs", "Projects", new { id = id });

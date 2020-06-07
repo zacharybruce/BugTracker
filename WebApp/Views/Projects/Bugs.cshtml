@@ -28,14 +28,11 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            @*<td class="listBody" style="padding:47px 0px">
-                @Html.DisplayFor(modelItem => item.Project.ProjectName)
-            </td>*@
+        <tr class="@item.Priority.ToString()">
             <td class="listBody">
                 @Html.DisplayFor(modelItem => item.BugName)
             </td>
-            <td class="listBody">
+            <td id="BugRow" class="listBody">
                 @Html.DisplayFor(modelItem => item.Priority)
             </td>
             <td class="listBody">
@@ -50,16 +47,3 @@
     }
 
 </table>
-
-@*@foreach (var item in Model)
-{
-    <div class="thumbnail bug">
-        <p class="pull-right delete">@Html.ActionLink("x", "Delete", "Bugs", new { id = item.ID }, null)</p>
-        <p>@Html.ActionLink(item.BugName, "Details", "Bugs", new { id = item.ID }, null)</p>
-        <p>@Html.DisplayFor(modelItem => item.Priority)</p>
-        <p>@Html.DisplayFor(modelItem => item.BugDescription)</p>
-        <p class="text-center">
-            @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null)
-         </p>
-    </div>
-}*@

@@ -92,3 +92,22 @@ textarea {
     box-shadow: 5px 10px 8px grey;
     margin-bottom: 50px;
 }
+
+.Immediate {
+    background-color: darkred;
+    color: white;
+}
+.High {
+    background-color: red;
+}
+.Normal {
+    background-color: orange;
+}
+.Low {
+    background-color: yellow;
+}
+
+th {
+    background-color: grey;
+    color: white;
+}
