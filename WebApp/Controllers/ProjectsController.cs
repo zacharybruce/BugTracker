@@ -128,6 +128,15 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         public ActionResult Bugs(string id)
         {
             string currentUser = User.Identity.GetUserName();
@@ -136,13 +145,40 @@ namespace WebApp.Controllers
             return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList());
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult LowPriority(string id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID 
+                    && b.Priority.ToString() == "Low").ToList());
+        }
+
+        public ActionResult NormalPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "Normal").ToList());
+        }
+
+        public ActionResult HighPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "High").ToList());
+        }
+
+        public ActionResult ImmediatePriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+            var bugs = db.Bugs.Include(b => b.Project);
+            return View(bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "Immediate").ToList());
         }
     }
 }

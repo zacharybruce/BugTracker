@@ -36,18 +36,17 @@ table {
 .listHeader {
     text-align: center;
     border: solid;
-}
-
-td {
-    height:100px;
-    vertical-align: bottom;
+    border-color: black;
 }
 
 .listBody {
     text-align: center;
-    border-left: solid;
-    width: 100px;
-    vertical-align: bottom
+    border: solid;
+    border-color: black;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .button {
@@ -86,25 +85,18 @@ textarea {
     margin-right: 5px
 }
 
-.bug {
-    background-color: lightgreen;
-    border: 1px solid;
-    box-shadow: 5px 10px 8px grey;
-    margin-bottom: 50px;
-}
-
 .Immediate {
     background-color: darkred;
     color: white;
 }
 .High {
-    background-color: red;
+    background-color: #ff8533;
 }
 .Normal {
-    background-color: orange;
+    background-color: #ffff66;
 }
 .Low {
-    background-color: yellow;
+    background-color: #5cd65c;
 }
 
 th {
