@@ -103,3 +103,17 @@ th {
     background-color: grey;
     color: white;
 }
+
+tr {
+    transition: 0.3s;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.trHeight:hover {
+    height: 100px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
