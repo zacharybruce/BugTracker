@@ -98,7 +98,7 @@ namespace WebApp.Controllers
                 currentBug.BugDescription = bug.BugDescription;
                 currentBug.Priority = bug.Priority;
                 db.SaveChanges();
-                return RedirectToAction("Bugs", "Projects", new { id = currentBug.ProjectID });
+                return RedirectToAction("Bugs", "Projects", new { id = currentBug.Project.ProjectName });
             }
             //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
