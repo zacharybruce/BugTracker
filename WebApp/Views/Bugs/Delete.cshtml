@@ -4,18 +4,17 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2 class="text-center pageTitle">@Model.BugName</h2>
+<p class="text-center">Delete</p>
 <div>
-    <h4>Bug</h4>
     <hr />
+    <h3 class="text-center">Are you sure you want to delete this?</h3>
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="topdd">
             Project
         </dt>
 
-        <dd>
+        <dd class="topdd">
             @Html.DisplayFor(model => model.Project.ProjectName)
         </dd>
 
@@ -45,12 +44,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = Model.ProjectID }, null)
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = Model.Project.ProjectName }, htmlAttributes: new { @class = "pull-right" })
         </div>
     }
 </div>

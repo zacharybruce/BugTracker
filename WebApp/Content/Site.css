@@ -19,9 +19,14 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
+select {
+    max-width: 40%;
+}
+
 textarea {
-    max-width: 400px;
+    font-size: 18px;
+    width: 80%;
+    height: 200px;
 }
 
 .jumbotron {
@@ -52,11 +57,6 @@ table {
 .button {
     height: 20px;
     width: 40px;
-}
-
-textarea {
-    height: 200px;
-    width: 400px;
 }
 
 .addDeletePic {
@@ -116,4 +116,20 @@ tr {
 
 .table > tbody > tr > td {
     vertical-align: middle;
+}
+
+.topdd {
+    margin-top: 20px;
+}
+
+dd {
+    margin-bottom:20px;
+}
+
+/*dt {
+    margin-top: 10px;
+}*/
+
+dl {
+    border: grey solid;
 }
