@@ -185,5 +185,18 @@ namespace WebApp.Controllers
                     && b.Priority.ToString() == "Immediate").ToList();
             return View("Bugs", immediateBugs);
         }
+
+        public ActionResult SortByRecent(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+
+            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+            allBugs.Reverse();
+
+            return View("Bugs", allBugs);
+        }
     }
 }

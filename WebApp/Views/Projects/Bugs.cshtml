@@ -17,6 +17,12 @@
         @Html.ActionLink("Immediate Priority", "ImmediatePriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
     </p>
 </div>
+<div class="row">
+    <p class="pull-right">
+        @Html.ActionLink("Recent", "SortByRecent", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Oldest", "Bugs", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+    </p>
+</div>
 
 <table class="table">
     <tr>
