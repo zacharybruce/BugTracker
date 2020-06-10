@@ -4,17 +4,19 @@
     ViewBag.Title = "Details";
 }
 
-<h2 class="text-center pageTitle">@Model.BugName</h2>
-<p class="text-center">Details</p>
+<div class="text-center">
+    <h2 class="text-center pageTitle">@Model.BugName</h2>
+    <h3 class="text-center">Details</h3>
+    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</p>
+</div>
 
 <div>
-    <hr />
     <dl class="dl-horizontal">
-        <dt class="topdd">
+        <dt class="toprow">
             @Html.DisplayNameFor(model => model.Project.ProjectName)
         </dt>
 
-        <dd class="topdd">
+        <dd class="toprow">
             @Html.DisplayFor(model => model.Project.ProjectName)
         </dd>
 
@@ -45,6 +47,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = Model.Project.ProjectName }, null)
+    @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = Model.Project.ProjectName })
 </p>

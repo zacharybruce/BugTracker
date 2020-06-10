@@ -8,10 +8,10 @@
 <p class="text-center">Delete</p>
 <div>
     <hr />
-    <h3 class="text-center">Are you sure you want to delete this?</h3>
+    <h3 class="text-center">Are you sure you want to delete this bug?</h3>
     <dl class="dl-horizontal">
         <dt class="topdd">
-            Project
+            @Html.DisplayNameFor(model => model.Project.ProjectName)
         </dt>
 
         <dd class="topdd">
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            Bug Name
+            @Html.DisplayNameFor(model => model.BugName)
         </dt>
 
         <dd>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            Priority
+            @Html.DisplayNameFor(model => model.Priority)
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            Description
+            @Html.DisplayNameFor(model => model.BugDescription)
         </dt>
 
         <dd>
