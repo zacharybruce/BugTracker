@@ -76,9 +76,9 @@ table {
 
 .project {
     background-color: #ffcc66;
-    border: 3px solid;
+    border: 3px black solid;
     border-radius: 15px;
-    box-shadow: 5px 10px 8px grey;
+    box-shadow: 10px 10px 5px black;
     margin-bottom: 50px;
     width: 75%;
 }

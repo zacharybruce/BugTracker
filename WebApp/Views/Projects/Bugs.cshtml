@@ -9,20 +9,24 @@
 <p class="text-center">
     @Html.ActionLink("Add Bug", "Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
 </p>
+
 <div class="row">
     <p class="pull-right">
-        @Html.ActionLink("All", "Bugs", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) | 
+        Priority:  
+        @Html.ActionLink("All Priority", "Bugs", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("Low Priority", "LowPriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("Normal Priority", "NormalPriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("High Priority", "HighPriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("Immediate Priority", "ImmediatePriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
     </p>
 </div>
+
 <div class="row">
     <p class="pull-right">
-        Sort By: 
+        Sort By:
         @Html.ActionLink("Recent", "SortByRecent", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
-        @Html.ActionLink("Oldest", "Bugs", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+        @Html.ActionLink("Oldest", "Bugs", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null) | 
+        @Html.ActionLink("Priority", "SortByPriority", "Projects", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
     </p>
 </div>
 

@@ -198,5 +198,26 @@ namespace WebApp.Controllers
 
             return View("Bugs", allBugs);
         }
+
+        public ActionResult SortByPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+            var bugs = db.Bugs.Include(b => b.Project);
+            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+
+            var sortOrder = new Dictionary<string, int>
+            {
+                { "Low", 1 },
+                { "Normal", 2 },
+                { "High", 3 },
+                { "Immediate", 4 }
+            };
+
+            var defaultOrder = sortOrder.Max(x => x.Value) + 1;
+
+            var sortedByPriority = allBugs.OrderBy(p => sortOrder.TryGetValue(p.Priority.ToString(), out var order) ? order : defaultOrder);
+            return View("Bugs", sortedByPriority);
+        }
     }
 }
