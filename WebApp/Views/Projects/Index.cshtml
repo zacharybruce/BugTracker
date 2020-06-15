@@ -5,11 +5,16 @@
     ViewBag.Title = "Projects";
 }
 
-<h1 class="text-center pageTitle">Projects</h1>
-
-<p class="text-center">
-    @Html.ActionLink("Add Project", "Create")
-</p>
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-2 createBtn">
+        <button type="button" title="Add Project" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Projects")'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="col-md-8 text-center">
+        <h1 class="pageTitle">Projects</h1>
+    </div>
+</div>
 
 @foreach (var item in Model)
 {

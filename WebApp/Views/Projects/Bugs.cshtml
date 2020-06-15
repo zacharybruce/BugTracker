@@ -4,11 +4,16 @@
     ViewBag.Title = "Bugs";
 }
 
-<h1 class="text-center pageTitle">@Url.RequestContext.RouteData.Values["id"]</h1>
-
-<p class="text-center">
-    @Html.ActionLink("Add Bug", "Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
-</p>
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-2 createBtn">
+        <button type="button" title="Add Bug" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] })'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="col-md-8 text-center">
+        <h1 class="pageTitle">@Url.RequestContext.RouteData.Values["id"]</h1>
+    </div>
+</div>
 
 <div class="row">
     <p class="pull-right">
