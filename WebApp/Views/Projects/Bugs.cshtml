@@ -65,9 +65,9 @@
                 @Html.DisplayFor(modelItem => item.BugDescription)
             </td>
             <td class="listBody">
-                @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, null) |
-                @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, null) |
-                @Html.ActionLink("Delete", "Delete", "Bugs", new { id = item.ID }, null)
+                @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, new { title = "Edit Bug" }) |
+                @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, new { title = "Bug Details" }) |
+                @Html.ActionLink("Delete", "Delete", "Bugs", new { id = item.ID }, new { title = "Delete Bug" })
             </td>
         </tr>
     }

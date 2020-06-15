@@ -20,12 +20,12 @@
 {
     <div class="container project">
         <div class="row">
-            <p class="pull-right delete">@Html.ActionLink("x", "Delete", new { id = item.ID })</p>
+            <p class="pull-right">@Html.ActionLink("x", "Delete", new { id = item.ID }, new { @class = "delete", title="Delete Project"})</p>
             <h2 class="text-center col-md-offset-1 col-md-10">
-                @Html.ActionLink(item.ProjectName, "Bugs", new { id = item.ProjectName })
+                @Html.ActionLink(item.ProjectName, "Bugs", new { id = item.ProjectName }, new { title = "View Bugs" })
             </h2>
         </div>
         <p class="text-center">@Html.DisplayFor(modelItem => item.ProjectDescription) </p>
-        <p class="text-center">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</p>
+        <p class="text-center">@Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { title = "Edit Project" })</p>
     </div>
 }
