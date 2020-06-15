@@ -21,8 +21,12 @@ namespace WebApp.Controllers
         // GET: Projects
         public ActionResult Index()
         {
+            string currentUser = User.Identity.GetUserName();
+
             var projects = db.Projects.Include(p => p.Profile);
-            return View(projects.ToList());
+            var userProjects = projects.Where(p => p.Profile.Email == currentUser);
+
+            return View(userProjects.ToList());
         }
 
         // GET: Projects/Details/5
@@ -139,6 +143,10 @@ namespace WebApp.Controllers
 
         public ActionResult Bugs(string id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             string currentUser = User.Identity.GetUserName();
             int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
             var bugs = db.Bugs.Include(b => b.Project);

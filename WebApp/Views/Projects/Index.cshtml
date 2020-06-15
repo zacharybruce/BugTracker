@@ -10,52 +10,17 @@
 <p class="text-center">
     @Html.ActionLink("Add Project", "Create")
 </p>
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectDescription)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        if (item.Profile.Email == User.Identity.GetUserName())
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(item.ProjectName, "Bugs", new { id = item.ID })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectDescription)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID}) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID}) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
-            </tr>
-        }
-    }
-
-</table>*@
 
 @foreach (var item in Model)
 {
-    if (item.Profile.Email == User.Identity.GetUserName())
-    {
-        <div class="container project">
-            <div class="row">
-                <p class="pull-right delete">@Html.ActionLink("x", "Delete", new { id = item.ID })</p>
-                <h2 class="text-center col-md-offset-1 col-md-10">
-                    @Html.ActionLink(item.ProjectName, "Bugs", new { id = item.ProjectName })
-                </h2>
-            </div>
-            <p class="text-center">@Html.DisplayFor(modelItem => item.ProjectDescription) </p>
-            <p class="text-center">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</p>
+    <div class="container project">
+        <div class="row">
+            <p class="pull-right delete">@Html.ActionLink("x", "Delete", new { id = item.ID })</p>
+            <h2 class="text-center col-md-offset-1 col-md-10">
+                @Html.ActionLink(item.ProjectName, "Bugs", new { id = item.ProjectName })
+            </h2>
         </div>
-    }
+        <p class="text-center">@Html.DisplayFor(modelItem => item.ProjectDescription) </p>
+        <p class="text-center">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</p>
+    </div>
 }
