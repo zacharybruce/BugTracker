@@ -132,7 +132,6 @@ th {
 tr {
     transition: 0.3s;
     height: 50px;
-    vertical-align: middle;
 }
 
 .trHeight:hover {
@@ -161,4 +160,18 @@ dl {
 
 .createBtn {
     padding-top: 35px;
+}
+
+.deletebtn {
+    border-radius: 8px;
+    border: black solid;
+}
+
+.editBtn {
+    border-radius: 8px;
+    border: black solid
+}
+
+.bugName{
+    color: black;
 }

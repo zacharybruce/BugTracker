@@ -49,14 +49,15 @@
         <th class="listHeader">
             @Html.DisplayNameFor(model => model.BugDescription)
         </th>
-        <th class="listHeader"> </th>
+        <th class="listHeader">Edit</th>
+        <th class="listHeader">Delete</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr class="@item.Priority trHeight">
             <td class="listBody" style="margin-top: 50px;">
-                @Html.DisplayFor(modelItem => item.BugName)
+                @Html.ActionLink(item.BugName, "Details", "Bugs", new { id = item.ID }, new { @class = "bugName", title = "Bug Details" })
             </td>
             <td class="listBody">
                 @Html.DisplayFor(modelItem => item.Priority)
@@ -65,9 +66,14 @@
                 @Html.DisplayFor(modelItem => item.BugDescription)
             </td>
             <td class="listBody">
-                @Html.ActionLink("Edit", "Edit", "Bugs", new { id = item.ID }, new { title = "Edit Bug" }) |
-                @Html.ActionLink("Details", "Details", "Bugs", new { id = item.ID }, new { title = "Bug Details" }) |
-                @Html.ActionLink("Delete", "Delete", "Bugs", new { id = item.ID }, new { title = "Delete Bug" })
+                <button type="button" class="editBtn btn btn-primary" title="Edit Bug" onclick="location.href='@Url.Action("Edit", "Bugs", new { id = item.ID })'">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </td>
+            <td class="listBody">
+                <button type="button" class="deletebtn btn btn-danger" title="Delete Bug" onclick="location.href='@Url.Action("Delete", "Bugs", new { id = item.ID })'">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </td>
         </tr>
     }
