@@ -45,8 +45,12 @@ namespace WebApp.Controllers
         }
 
         // GET: Projects/Create
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+            if (id != null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
             return View();
         }
