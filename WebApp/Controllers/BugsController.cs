@@ -25,7 +25,7 @@ namespace WebApp.Controllers
             return View(bugs.ToList());
         }
 
-        // GET: Bugs/Details/5
+        // GET: Bugs/Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,20 +43,16 @@ namespace WebApp.Controllers
         // GET: Bugs/Create
         public ActionResult Create(string id)
         {
-            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName");
             return View();
         }
 
         // POST: Bugs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BugName,Priority,BugDescription,ProjectID")] Bug bug, string id)
         {
             if (ModelState.IsValid)
             {
-                //var userID = User.Identity.GetUserName();
                 string currentUser = User.Identity.GetUserName();
                 bug.ProjectID = db.Projects.Where(x => x.ProjectName == id && x.Profile.Email == currentUser).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
@@ -64,29 +60,27 @@ namespace WebApp.Controllers
                 return RedirectToAction("Bugs", "Projects", new { id = id });
             }
 
-            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
-        // GET: Bugs/Edit/5
+        // GET: Bugs/Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Bug bug = db.Bugs.Find(id);
             if (bug == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.Priority = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
+
             return View(bug);
         }
 
-        // POST: Bugs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Bugs/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Bug bug, int id)
@@ -100,11 +94,10 @@ namespace WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Bugs", "Projects", new { id = currentBug.Project.ProjectName });
             }
-            //ViewBag.ProjectID = new SelectList(db.Projects, "ID", "ProjectName", bug.ProjectID);
             return View(bug);
         }
 
-        // GET: Bugs/Delete/5
+        // GET: Bugs/Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,7 +112,7 @@ namespace WebApp.Controllers
             return View(bug);
         }
 
-        // POST: Bugs/Delete/5
+        // POST: Bugs/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
