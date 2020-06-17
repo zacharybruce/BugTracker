@@ -1,8 +1,5 @@
 ﻿body {
     padding-top: 50px;
-    background: url(Images/backgroundImage.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -10,7 +7,6 @@
     padding-left: 15px;
     padding-right: 15px;
     font-size: 18px;
-    color: white;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -78,7 +74,7 @@ table {
     background-color: #ffcc66;
     border: 3px black solid;
     border-radius: 15px;
-    box-shadow: 10px 10px 5px black;
+    box-shadow: 10px 10px 5px darkgrey;
     margin-bottom: 50px;
     width: 75%;
 }
@@ -174,4 +170,9 @@ dl {
 
 .bugName{
     color: black;
+}
+
+.deleteConfirmation{
+    color: red;
+    margin-bottom: 20px;
 }
