@@ -150,6 +150,14 @@ namespace WebApp.Controllers
             string currentUser = User.Identity.GetUserName();
             int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
             var bugs = db.Bugs.Include(b => b.Project);
+
+            // If project does not exist, throw 404 error
+            var project = db.Projects.Where(p => p.ProjectName == id).ToList();
+            if (project.Count == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
             var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
             return View(allBugs);
         }
