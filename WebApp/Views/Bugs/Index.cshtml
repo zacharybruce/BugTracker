@@ -4,48 +4,75 @@
     ViewBag.Title = "Bugs";
 }
 
-<h2>Bugs</h2>
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-2 createBtn">
+        <button type="button" title="Add Bug" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] })'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="col-md-8 text-center">
+        <h1 class="pageTitle">@Url.RequestContext.RouteData.Values["id"]</h1>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Add Bug", "Create")
-</p>
+<div class="row">
+    <p class="pull-right">
+        Priority:
+        @Html.ActionLink("All Priority", "Index", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Low Priority", "LowPriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Normal Priority", "NormalPriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("High Priority", "HighPriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Immediate Priority", "ImmediatePriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+    </p>
+</div>
+
+<div class="row">
+    <p class="pull-right">
+        Sort By:
+        @Html.ActionLink("Recent", "SortByRecent", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Oldest", "Index", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
+        @Html.ActionLink("Priority", "SortByPriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+    </p>
+</div>
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Project.ProjectName)
+        <th class="listHeader">
+            @Html.DisplayNameFor(model => model.BugName)
         </th>
-        <th>
-            Bug Name
-        </th>
-        <th>
+        <th class="listHeader">
             @Html.DisplayNameFor(model => model.Priority)
         </th>
-        <th>
-            Description
+        <th class="listHeader">
+            @Html.DisplayNameFor(model => model.BugDescription)
         </th>
-        <th></th>
+        <th class="listHeader">Edit</th>
+        <th class="listHeader">Delete</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Project.ProjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BugName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Priority)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BugDescription)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr class="@item.Priority trHeight">
+            <td class="listBody" style="margin-top: 50px;">
+                @Html.ActionLink(item.BugName, "Details", "Bugs", new { id = item.ID }, new { @class = "bugName", title = "Bug Details" })
+            </td>
+            <td class="listBody">
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td class="listBody">
+                @Html.DisplayFor(modelItem => item.BugDescription)
+            </td>
+            <td class="listBody">
+                <button type="button" class="editBtn btn btn-primary" title="Edit Bug" onclick="location.href='@Url.Action("Edit", "Bugs", new { id = item.ID })'">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </td>
+            <td class="listBody">
+                <button type="button" class="deletebtn btn btn-danger" title="Delete Bug" onclick="location.href='@Url.Action("Delete", "Bugs", new { id = item.ID })'">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+    }
 
 </table>

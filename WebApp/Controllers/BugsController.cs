@@ -19,10 +19,28 @@ namespace WebApp.Controllers
         private BugTrackerContext db = new BugTrackerContext();
 
         // GET: Bugs
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
             var bugs = db.Bugs.Include(b => b.Project);
-            return View(bugs.ToList());
+
+            // If project does not exist, throw 404 error
+            var project = db.Projects.Where(p => p.ProjectName == id).ToList();
+            if (project.Count == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+
+            return View(allBugs);
         }
 
         // GET: Bugs/Details
@@ -131,6 +149,100 @@ namespace WebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // Returns only low priority bugs for current project
+        public ActionResult LowPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+            var lowBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "Low").ToList();
+
+            return View("Index", lowBugs);
+        }
+
+        // Returns only normal priority bugs for current project
+        public ActionResult NormalPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+            var normalBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "Normal").ToList();
+
+            return View("Index", normalBugs);
+        }
+
+        // Returns only high priority bugs for current project
+        public ActionResult HighPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+            var highBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "High").ToList();
+
+            return View("Index", highBugs);
+        }
+
+        // Returns only low priority bugs for current project
+        public ActionResult ImmediatePriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+            var immediateBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
+                    && b.Priority.ToString() == "Immediate").ToList();
+
+            return View("Index", immediateBugs);
+        }
+
+        // Sorts bug list where most recent bugs are before older ones
+        public ActionResult SortByRecent(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+
+            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+            allBugs.Reverse();
+
+            return View("Index", allBugs);
+        }
+
+        // Sorts bug list by priority.  Order is low, normal, high, then immediate
+        public ActionResult SortByPriority(string id)
+        {
+            string currentUser = User.Identity.GetUserName();
+            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
+
+            var bugs = db.Bugs.Include(b => b.Project);
+            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+
+            var sortOrder = new Dictionary<string, int>
+            {
+                { "Low", 1 },
+                { "Normal", 2 },
+                { "High", 3 },
+                { "Immediate", 4 }
+            };
+
+            var defaultOrder = sortOrder.Max(x => x.Value) + 1;
+
+            var sortedByPriority = allBugs.OrderBy(p => sortOrder.TryGetValue(p.Priority.ToString(), out var order) ? order : defaultOrder);
+
+            return View("Index", sortedByPriority);
         }
     }
 }
