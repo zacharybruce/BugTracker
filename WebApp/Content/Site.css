@@ -30,7 +30,7 @@ textarea {
 }
 
 .jumbotron {
-    background-color: lightblue !important;
+    background-color: white !important;
     width: 100% !important;
 }
 
@@ -79,19 +79,16 @@ table {
     width: 75%;
 }
 
-/*a:link {
-    color:white;
-}
-a:visited {
-    color: white;
-}*/
-
 .pageTitle {
     font-size: 60px;
 }
 
-.homeTitle {
-    font-size: 80px;
+#homeTitle {
+    font-weight: bold;
+}
+
+#homeTitleXs {
+    font-size:70px;
     font-weight: bold;
 }
 

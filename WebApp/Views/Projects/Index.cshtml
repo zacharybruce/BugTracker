@@ -5,14 +5,25 @@
     ViewBag.Title = "Projects";
 }
 
-<div class="row" style="margin-bottom: 20px">
-    <div class="col-md-2 createBtn">
+<div class="row hidden-sm hidden-xs" style="margin-bottom: 20px">
+    <div class="col-md-2 createBtn hidden-sm hidden-xs">
         <button type="button" title="Add Project" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Projects")'">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
     <div class="col-md-8 text-center">
         <h1 class="pageTitle">Projects</h1>
+    </div>
+</div>
+
+<div class="hidden-lg hidden-md" style="margin-bottom: 20px">
+    <div class="text-center" style="margin-bottom:-20px">
+        <h1 class="pageTitle">Projects</h1>
+    </div>
+    <div class="text-center createBtn">
+        <button type="button" title="Add Project" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Projects")'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
     </div>
 </div>
 

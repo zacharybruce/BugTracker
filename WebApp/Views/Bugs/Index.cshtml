@@ -4,7 +4,7 @@
     ViewBag.Title = "Bugs";
 }
 
-<div class="row" style="margin-bottom: 20px">
+<div class="row hidden-sm hidden-xs" style="margin-bottom: 20px">
     <div class="col-md-2 createBtn">
         <button type="button" title="Add Bug" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] })'">
             <span class="glyphicon glyphicon-plus"></span>
@@ -15,8 +15,19 @@
     </div>
 </div>
 
+<div class="hidden-lg hidden-md" style="margin-bottom: 20px">
+    <div class="text-center" style="margin-bottom:-25px">
+        <h1 class="pageTitle">@Url.RequestContext.RouteData.Values["id"]</h1>
+    </div>
+    <div class="createBtn text-center">
+        <button type="button" title="Add Bug" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] })'">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+</div>
+
 <div class="row">
-    <p class="pull-right">
+    <p class="pull-right" style="margin-right:15px">
         Priority:
         @Html.ActionLink("All Priority", "Index", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("Low Priority", "LowPriority", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
@@ -27,7 +38,7 @@
 </div>
 
 <div class="row">
-    <p class="pull-right">
+    <p class="pull-right" style="margin-right:15px">
         Sort By:
         @Html.ActionLink("Recent", "SortByRecent", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
         @Html.ActionLink("Oldest", "Index", "Bugs", new { id = Url.RequestContext.RouteData.Values["id"] }, null) |
@@ -40,10 +51,10 @@
         <th class="listHeader">
             @Html.DisplayNameFor(model => model.BugName)
         </th>
-        <th class="listHeader">
+        <th class="listHeader hidden-sm hidden-xs">
             @Html.DisplayNameFor(model => model.Priority)
         </th>
-        <th class="listHeader">
+        <th class="listHeader hidden-xs">
             @Html.DisplayNameFor(model => model.BugDescription)
         </th>
         <th class="listHeader">Edit</th>
@@ -56,10 +67,10 @@
             <td class="listBody" style="margin-top: 50px;">
                 @Html.ActionLink(item.BugName, "Details", "Bugs", new { id = item.ID }, new { @class = "bugName", title = "Bug Details" })
             </td>
-            <td class="listBody">
+            <td class="listBody hidden-sm hidden-xs">
                 @Html.DisplayFor(modelItem => item.Priority)
             </td>
-            <td class="listBody">
+            <td class="listBody hidden-xs">
                 @Html.DisplayFor(modelItem => item.BugDescription)
             </td>
             <td class="listBody">

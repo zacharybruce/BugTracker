@@ -14,7 +14,11 @@
             @Html.DisplayNameFor(model => model.Project.ProjectName)
         </dt>
 
-        <dd class="toprow">
+        <dd class="toprow hidden-xs">
+            @Html.DisplayFor(model => model.Project.ProjectName)
+        </dd>
+
+        <dd class="hidden-lg hidden-md hidden-sm">
             @Html.DisplayFor(model => model.Project.ProjectName)
         </dd>
 
