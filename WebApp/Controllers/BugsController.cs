@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                 bug.ProjectID = db.Projects.Where(x => x.ProjectName == id && x.Profile.Email == currentUser).Select(x => x.ID).Single();
                 db.Bugs.Add(bug);
                 db.SaveChanges();
-                return RedirectToAction("Bugs", "Projects", new { id = id });
+                return RedirectToAction("Index", "Bugs", new { id = id });
             }
 
             return View(bug);
