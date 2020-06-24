@@ -21,12 +21,8 @@ namespace WebApp.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            string currentUser = User.Identity.GetUserName();
-
-            var projects = db.Projects.Include(p => p.Profile);
-            var userProjects = projects.Where(p => p.Profile.Email == currentUser);
-
-            return View(userProjects.ToList());
+            List<Project> userProjects = SqlLogic.GetUserProjects();
+            return View(userProjects);
         }
 
         // GET: Projects/Details/5
@@ -36,7 +32,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Project project = SqlLogic.FindProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -51,7 +47,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Email");
+
             return View();
         }
 
@@ -62,10 +58,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userID = User.Identity.GetUserName();
-                project.ProfileID = db.Profiles.Where(x => x.Email == userID).Select(x => x.ID).Single();
-                db.Projects.Add(project);
-                db.SaveChanges();
+                SqlLogic.CreateProject(project);
                 return RedirectToAction("Index");
             }
 
@@ -79,7 +72,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Project project = SqlLogic.FindProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -95,10 +88,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentProject = db.Projects.FirstOrDefault(p => p.ID == project.ID);
-                currentProject.ProjectName = project.ProjectName;
-                currentProject.ProjectDescription = project.ProjectDescription;
-                db.SaveChanges();
+                SqlLogic.EditProject(project);
                 return RedirectToAction("Index");
             }
             
@@ -112,7 +102,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Project project = SqlLogic.FindProject(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -125,9 +115,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
-            db.SaveChanges();
+            SqlLogic.DeleteProjectConfirmation(id);
             return RedirectToAction("Index");
         }
 

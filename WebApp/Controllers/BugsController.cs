@@ -26,11 +26,6 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            string currentUser = User.Identity.GetUserName();
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-
             // If project does not exist, throw 404 error
             var project = db.Projects.Where(p => p.ProjectName == id).ToList();
             if (project.Count == 0)
@@ -38,7 +33,7 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
+            List<Bug> allBugs = SqlLogic.GetBugsForCurrentProject(id);
 
             return View(allBugs);
         }
@@ -50,7 +45,9 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bug bug = db.Bugs.Find(id);
+
+            Bug bug = SqlLogic.FindBug(id);
+
             if (bug == null)
             {
                 return HttpNotFound();
@@ -71,10 +68,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string currentUser = User.Identity.GetUserName();
-                bug.ProjectID = db.Projects.Where(x => x.ProjectName == id && x.Profile.Email == currentUser).Select(x => x.ID).Single();
-                db.Bugs.Add(bug);
-                db.SaveChanges();
+                SqlLogic.CreateBug(bug, id);
                 return RedirectToAction("Index", "Bugs", new { id = id });
             }
 
@@ -89,7 +83,7 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Bug bug = db.Bugs.Find(id);
+            Bug bug = SqlLogic.FindBug(id);
             if (bug == null)
             {
                 return HttpNotFound();
@@ -105,11 +99,8 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentBug = db.Bugs.FirstOrDefault(b => b.ID == bug.ID);
-                currentBug.BugName = bug.BugName;
-                currentBug.BugDescription = bug.BugDescription;
-                currentBug.Priority = bug.Priority;
-                db.SaveChanges();
+                Bug currentBug = SqlLogic.GetCurrentBug(bug);
+                SqlLogic.EditBug(bug, id);
                 return RedirectToAction("Bugs", "Projects", new { id = currentBug.Project.ProjectName });
             }
             return View(bug);
@@ -122,7 +113,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bug bug = db.Bugs.Find(id);
+            Bug bug = SqlLogic.FindBug(id);
             if (bug == null)
             {
                 return HttpNotFound();
@@ -135,10 +126,11 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bug bug = db.Bugs.Find(id);
-            var currentProject = bug.Project.ProjectName;
-            db.Bugs.Remove(bug);
-            db.SaveChanges();
+            Bug bug = SqlLogic.FindBug(id);
+            string currentProject = bug.Project.ProjectName;
+
+            SqlLogic.DeleteBugConfirmation(bug);
+
             return RedirectToAction("Bugs", "Projects", new { id = currentProject });
         }
 
@@ -154,13 +146,7 @@ namespace WebApp.Controllers
         // Returns only low priority bugs for current project
         public ActionResult LowPriority(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-            var lowBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
-                    && b.Priority.ToString() == "Low").ToList();
+            List<Bug> lowBugs = SqlLogic.GetPriorityBugs("Low", id);
 
             return View("Index", lowBugs);
         }
@@ -168,13 +154,7 @@ namespace WebApp.Controllers
         // Returns only normal priority bugs for current project
         public ActionResult NormalPriority(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-            var normalBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
-                    && b.Priority.ToString() == "Normal").ToList();
+            List<Bug> normalBugs = SqlLogic.GetPriorityBugs("Normal", id);
 
             return View("Index", normalBugs);
         }
@@ -182,13 +162,7 @@ namespace WebApp.Controllers
         // Returns only high priority bugs for current project
         public ActionResult HighPriority(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-            var highBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
-                    && b.Priority.ToString() == "High").ToList();
+            List<Bug> highBugs = SqlLogic.GetPriorityBugs("High", id);
 
             return View("Index", highBugs);
         }
@@ -196,13 +170,7 @@ namespace WebApp.Controllers
         // Returns only low priority bugs for current project
         public ActionResult ImmediatePriority(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-            var immediateBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID
-                    && b.Priority.ToString() == "Immediate").ToList();
+            List<Bug> immediateBugs = SqlLogic.GetPriorityBugs("Immediate", id);
 
             return View("Index", immediateBugs);
         }
@@ -210,13 +178,7 @@ namespace WebApp.Controllers
         // Sorts bug list where most recent bugs are before older ones
         public ActionResult SortByRecent(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-
-            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
-            allBugs.Reverse();
+            List<Bug> allBugs = SqlLogic.SortBugsByRecent(id);
 
             return View("Index", allBugs);
         }
@@ -224,24 +186,7 @@ namespace WebApp.Controllers
         // Sorts bug list by priority.  Order is low, normal, high, then immediate
         public ActionResult SortByPriority(string id)
         {
-            string currentUser = User.Identity.GetUserName();
-            int currentProfileID = db.Profiles.Where(p => p.Email == currentUser).Select(p => p.ID).Single();
-
-            var bugs = db.Bugs.Include(b => b.Project);
-            var allBugs = bugs.Where(b => b.Project.ProjectName == id && b.Project.ProfileID == currentProfileID).ToList();
-
-            var sortOrder = new Dictionary<string, int>
-            {
-                { "Low", 1 },
-                { "Normal", 2 },
-                { "High", 3 },
-                { "Immediate", 4 }
-            };
-
-            var defaultOrder = sortOrder.Max(x => x.Value) + 1;
-
-            var sortedByPriority = allBugs.OrderBy(p => sortOrder.TryGetValue(p.Priority.ToString(), out var order) ? order : defaultOrder);
-
+            IOrderedEnumerable<Bug> sortedByPriority = SqlLogic.SortBugsByPriority(id);
             return View("Index", sortedByPriority);
         }
     }
