@@ -33,7 +33,7 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            List<Bug> allBugs = SqlLogic.GetBugsForCurrentProject(id);
+            List<Bug> allBugs = SqlLogic.GetBugsForCurrentProject(id).OrderBy(x => x.Status).ToList();
 
             return View(allBugs);
         }
@@ -64,7 +64,7 @@ namespace WebApp.Controllers
         // POST: Bugs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BugName,Priority,BugDescription,ProjectID")] Bug bug, string id)
+        public ActionResult Create([Bind(Include = "BugName,Priority,BugDescription,Status,ProjectID")] Bug bug, string id)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace WebApp.Controllers
             {
                 Bug currentBug = SqlLogic.GetCurrentBug(bug);
                 SqlLogic.EditBug(bug, id);
-                return RedirectToAction("Bugs", "Projects", new { id = currentBug.Project.ProjectName });
+                return RedirectToAction("Index", "Bugs", new { id = currentBug.Project.ProjectName });
             }
             return View(bug);
         }
@@ -131,7 +131,7 @@ namespace WebApp.Controllers
 
             SqlLogic.DeleteBugConfirmation(bug);
 
-            return RedirectToAction("Bugs", "Projects", new { id = currentProject });
+            return RedirectToAction("Index", "Bugs", new { id = currentProject });
         }
 
         protected override void Dispose(bool disposing)
@@ -146,7 +146,7 @@ namespace WebApp.Controllers
         // Returns only low priority bugs for current project
         public ActionResult LowPriority(string id)
         {
-            List<Bug> lowBugs = SqlLogic.GetPriorityBugs("Low", id);
+            List<Bug> lowBugs = SqlLogic.GetPriorityBugs("Low", id).OrderBy(x => x.Status).ToList();
 
             return View("Index", lowBugs);
         }
@@ -154,7 +154,7 @@ namespace WebApp.Controllers
         // Returns only normal priority bugs for current project
         public ActionResult NormalPriority(string id)
         {
-            List<Bug> normalBugs = SqlLogic.GetPriorityBugs("Normal", id);
+            List<Bug> normalBugs = SqlLogic.GetPriorityBugs("Normal", id).OrderBy(x => x.Status).ToList();
 
             return View("Index", normalBugs);
         }
@@ -162,7 +162,7 @@ namespace WebApp.Controllers
         // Returns only high priority bugs for current project
         public ActionResult HighPriority(string id)
         {
-            List<Bug> highBugs = SqlLogic.GetPriorityBugs("High", id);
+            List<Bug> highBugs = SqlLogic.GetPriorityBugs("High", id).OrderBy(x => x.Status).ToList();
 
             return View("Index", highBugs);
         }
@@ -170,7 +170,7 @@ namespace WebApp.Controllers
         // Returns only low priority bugs for current project
         public ActionResult ImmediatePriority(string id)
         {
-            List<Bug> immediateBugs = SqlLogic.GetPriorityBugs("Immediate", id);
+            List<Bug> immediateBugs = SqlLogic.GetPriorityBugs("Immediate", id).OrderBy(x => x.Status).ToList();
 
             return View("Index", immediateBugs);
         }
@@ -178,7 +178,7 @@ namespace WebApp.Controllers
         // Sorts bug list where most recent bugs are before older ones
         public ActionResult SortByRecent(string id)
         {
-            List<Bug> allBugs = SqlLogic.SortBugsByRecent(id);
+            List<Bug> allBugs = SqlLogic.SortBugsByRecent(id).OrderBy(x => x.Status).ToList();
 
             return View("Index", allBugs);
         }

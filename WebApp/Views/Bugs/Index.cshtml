@@ -57,6 +57,9 @@
         <th class="listHeader hidden-xs">
             @Html.DisplayNameFor(model => model.BugDescription)
         </th>
+        <th class="listHeader">
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
         <th class="listHeader">Edit</th>
         <th class="listHeader">Delete</th>
     </tr>
@@ -72,6 +75,9 @@
             </td>
             <td class="listBody hidden-xs">
                 @Html.DisplayFor(modelItem => item.BugDescription)
+            </td>
+            <td class="listBody">                
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td class="listBody">
                 <button type="button" class="editBtn btn btn-primary" title="Edit Bug" onclick="location.href='@Url.Action("Edit", "Bugs", new { id = item.ID })'">

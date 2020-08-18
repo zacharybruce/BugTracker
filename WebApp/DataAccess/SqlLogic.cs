@@ -70,10 +70,11 @@ namespace WebApp.DataAccess
             return bug;
         }
 
-        public static void CreateBug([Bind(Include = "BugName,Priority,BugDescription,ProjectID")] Bug bug, string id)
+        public static void CreateBug([Bind(Include = "BugName,Priority,BugDescription,Status,ProjectID")] Bug bug, string id)
         {
             string currentUser = HttpContext.Current.User.Identity.GetUserName();
             bug.ProjectID = db.Projects.Where(x => x.ProjectName == id && x.Profile.Email == currentUser).Select(x => x.ID).Single();
+            bug.Status = "Active";
             db.Bugs.Add(bug);
             db.SaveChanges();
         }
@@ -90,6 +91,7 @@ namespace WebApp.DataAccess
             currentBug.BugName = bug.BugName;
             currentBug.BugDescription = bug.BugDescription;
             currentBug.Priority = bug.Priority;
+            currentBug.Status = bug.Status;
             db.SaveChanges();
         }
 
