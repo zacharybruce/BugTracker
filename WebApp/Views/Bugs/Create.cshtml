@@ -52,7 +52,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = @Url.RequestContext.RouteData.Values["id"] }, null)
+    @Html.ActionLink("Back to List", "Index", new { id = @Url.RequestContext.RouteData.Values["id"] }, null)
 </div>
 
 @section Scripts {

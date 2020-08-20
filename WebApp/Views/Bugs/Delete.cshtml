@@ -54,7 +54,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" />
-            @Html.ActionLink("Back to List", "Bugs", "Projects", new { id = Model.Project.ProjectName }, htmlAttributes: new { @class = "pull-right" })
+            @Html.ActionLink("Back to List", "Index", new { id = Model.Project.ProjectName }, htmlAttributes: new { @class = "pull-right" })
         </div>
     }
 </div>
